@@ -30,9 +30,9 @@ class TestTransaction:
         )
 
         current_timestamp = datetime.now().timestamp()
-        transction_id = uuid4()
-        transction = Transaction(
-            id_=transction_id,
+        transaction_id = uuid4()
+        transaction = Transaction(
+            id_=transaction_id,
             account_sender=account_sender,
             account_recipient=account_recipient,
             customer_sender=customer_sender,
@@ -41,17 +41,15 @@ class TestTransaction:
             amount=Decimal(10),
         )
 
-        assert isinstance(transction, Transaction)
+        assert isinstance(transaction, Transaction)
 
-        assert transction.id_ == transction_id
-        assert transction.account_sender == account_sender
-        assert transction.account_recipient == account_recipient
-        assert transction.customer_sender == customer_sender
-        assert transction.customer_recipient == customer_recipient
-        assert transction.amount == Decimal(10)
-        assert transction.timestamp == current_timestamp
+        assert transaction.id_ == transaction_id
+        assert transaction.account_sender == account_sender
+        assert transaction.account_recipient == account_recipient
+        assert transaction.customer_sender == customer_sender
+        assert transaction.customer_recipient == customer_recipient
+        assert transaction.amount == Decimal(10)
+        assert transaction.timestamp == current_timestamp
 
-        assert transction.account_sender in customer_sender.accounts
-        assert transction.account_recipient in customer_recipient.accounts
-
-
+        assert transaction.account_sender in customer_sender.accounts
+        assert transaction.account_recipient in customer_recipient.accounts
