@@ -12,7 +12,7 @@ from database.database import ObjectNotFound
 class TestRAMDatabase:
     def test_all_dbs(self) -> None:
         connection = "dbname=defaultdb port=25060 user=doadmin password=e5Y6G88wWs0EGS5e host=db-postgresql-nyc3-99638-do-user-4060406-0.b.db.ondigitalocean.com"
-        all_implementations = [AccountDatabaseRAM, AccountDatabasePandas]
+        all_implementations = [AccountDatabaseRAM, AccountDatabasePandas, AccountDatabasePostgres]
         for implementation in all_implementations:
             print()
             print("------------- Now testing", implementation.__name__)
@@ -43,7 +43,7 @@ class TestRAMDatabase:
 
     def a_test_all_dbs_persistent(self) -> None:
         connection = "dbname=defaultdb port=25060 user=doadmin password=e5Y6G88wWs0EGS5e host=db-postgresql-nyc3-99638-do-user-4060406-0.b.db.ondigitalocean.com"
-        all_implementations = [AccountDatabasePandas]
+        all_implementations = [AccountDatabaseRAM, AccountDatabasePandas, AccountDatabasePostgres]
 
         for implementation in all_implementations:
             print()
@@ -67,6 +67,17 @@ class TestRAMDatabase:
 
             with pytest.raises(ObjectNotFound):
                 database.get_object(uuid4())
+
+            database.delete(account)
+
+            with pytest.raises(ObjectNotFound):
+                database.get_object(account)
+
+            account_null = Account()
+            with pytest.raises(ObjectNotFound):
+                database.delete(account_null)
+
+
 
     def test_connection(self) -> None:
         connection = "dbname=defaultdb port=25060 user=doadmin password=e5Y6G88wWs0EGS5e host=db-postgresql-nyc3-99638-do-user-4060406-0.b.db.ondigitalocean.com"
