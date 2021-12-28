@@ -14,6 +14,7 @@ class Account:
     id_: UUID
     currency: str
     balance: Decimal
+    customer_id: UUID
 
     def __lt__(self, other: "Account") -> bool:
         assert isinstance(other, Account)
@@ -26,6 +27,7 @@ class Account:
             "id": str(self.id_),
             "currency": self.currency,
             "balance": float(self.balance),
+            "customer_id": str(self.customer_id),
         }
         return json.dumps(json_repr)
 
@@ -42,6 +44,7 @@ class Account:
             id_=UUID(obj["id"]),
             currency=obj["currency"],
             balance=Decimal(obj["balance"]),
+            customer_id=UUID(obj["customer_id"]),
         )
 
     @classmethod

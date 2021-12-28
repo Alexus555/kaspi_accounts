@@ -46,13 +46,13 @@ class AccountDatabasePostgres(AccountDatabase):
 
     def get_object(self, id_: UUID) -> Account:
         cur = self.conn.cursor()
-        cur.execute("SELECT * FROM accounts WHERE id=%s;", str(id_))
+        cur.execute("SELECT * FROM accounts WHERE id=%s;", (str(id_),))
         data = cur.fetchone()
         if data:
             account = Account(
-                id_=data["id"],
-                currency=data["currency"],
-                balance=data["balance"],
+                id_=UUID(data[0]),
+                currency=data[1],
+                balance=data[2],
             )
             return account
 

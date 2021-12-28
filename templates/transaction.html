@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Transaction: {{transaction.id_}}</title>
+</head>
+<body>
+<h1>Transaction info</h1>
+<button name="btnBackTransactions" onclick="window.location='../transactions/'" type="button">Transactions</button>
+<p>
+<form action="/transaction/" method="post" name="frmChangTransaction" style="margin: 1em">
+    <p><h3>Create transaction:</h3></p>
+    <input type="hidden" name="transaction_id" value="{{transaction.id_}}">
+    <p>Date: <br>
+        <input type="date" size="40" name="transaction_date" value="{{transaction.date}}" {{form_disabled}}>
+        <input type="time" size="20" name="transaction_time" value="{{transaction.date}}" {{form_disabled}}>
+    </p>
+    <p>Type: <br>
+        <select name="transaction_type" {{form_disabled}}>
+            <option disabled>Select type</option>
+            {% for tr_type in transaction_types %}
+                <option value="{{tr_type}}"
+                    {% if transaction.type == tr_type %}
+                    selected
+                    {% endif %}> {{tr_type}}</option>
+            {% endfor %}
+
+        </select>
+    </p>
+    <p>Currency: <br>
+        <select name="transaction_currency" {{form_disabled}}>
+            <option disabled>Select currency</option>
+            {% for currency in currencies %}
+                <option value="{{currency}}"
+                    {% if transaction.currency == currency %}
+                    selected
+                    {% endif %}> {{currency}}</option>
+            {% endfor %}
+
+        </select>
+    </p>
+    <p>Sender account: <br>
+        <select name="transaction_sender_account" {{form_disabled}}>
+            <option disabled>Select sander account</option>
+            {% for account in accounts %}
+                <option value="{{account.account.id_}}"
+                    {% if transaction.sender_account_id == account.account.id_ %}
+                    selected
+                    {% endif %}> {{account.customer.first_name}} {{account.customer.last_name}} - {{account.account.balance}} - {{account.account.currency}} </option>
+            {% endfor %}
+
+        </select>
+    </p>
+
+    <p>Recipient account: <br>
+        <select name="transaction_recipient_account" {{form_disabled}}>
+            <option disabled>Select recipient account</option>
+            {% for account in accounts %}
+                <option value="{{account.account.id_}}"
+                    {% if transaction.recipient_account_id == account.account.id_ %}
+                    selected
+                    {% endif %}> {{account.customer.first_name}} {{account.customer.last_name}} - {{account.account.balance}} - {{account.account.currency}} </option>
+            {% endfor %}
+
+        </select>
+    </p>
+
+    <p>Amount: <br>
+        <input type="number" size="20" name="transaction_amount" value="{{transaction.amount}}" {{form_disabled}}>
+    </p>
+    <p>
+        <input type="submit" name="btn_add_account" value="Save" {{form_disabled}}>
+    </p>
+
+    <p style="color: Red">{{message}}</p>
+</form>
+</p>
+
+</body>
+</html>

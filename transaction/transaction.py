@@ -9,10 +9,10 @@ from customer.customer import Customer
 @dataclass
 class Transaction:
     id_: UUID
-    timestamp: float
-    account_sender: Account
-    account_recipient: Account
-    customer_sender: Customer
-    customer_recipient: Customer
+    date: datetime
+    sender_account_id: UUID
+    recipient_account_id: UUID
     amount: Decimal
+    currency: str
+    type: str
 
